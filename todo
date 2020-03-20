@@ -1,0 +1,3 @@
+
+* Makefile with all components to run the containers with postgre and notebook
+* Pipenv workflow to update and generate requirements file with locked Python components
