@@ -1,5 +1,5 @@
 
 * Makefile with all components to run the containers with postgre and notebook - done
 * Pipenv workflow to update and generate requirements file with locked Python components - done
-* Do diagram for demo
-* Do a step by step walkthough
+* Do diagram for demo - done
+* Do a step by step walkthough - blog
