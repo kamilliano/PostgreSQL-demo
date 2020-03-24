@@ -3,7 +3,7 @@ POSTGRES_DB=demo-db
 POSTGRES_USER=demo-user
 POSTGRES_PASSWORD=password
 
-JUPYTER_PORT=8888
+JUPYTER_HOST_PORT=8888
 
 check_system:
 	# System details
@@ -27,8 +27,8 @@ update_requirements:
 
 run:
 	@echo "running docker compose"
+	JUPYTER_HOST_PORT=$(JUPYTER_HOST_PORT) 									\
 	POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) 									\
-	JUPYTER_PORT=$(JUPYTER_PORT) 											\
 	POSTGRES_PORT=$(POSTGRES_PORT) 											\
 	POSTGRES_DB=$(POSTGRES_DB) 												\
 	POSTGRES_USER=$(POSTGRES_USER) 											\
@@ -37,6 +37,7 @@ run:
 
 stop:
 	@echo "running docker compose"
+	JUPYTER_HOST_PORT=$(JUPYTER_HOST_PORT) 									\
 	POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) 									\
 	POSTGRES_PORT=$(POSTGRES_PORT) 											\
 	POSTGRES_DB=$(POSTGRES_DB) 												\
@@ -46,5 +47,11 @@ stop:
 
 db_container_login:
 	@echo "running docker compose"
-	docker-compose -f docker-compose/services.yml 					\
-	exec postgres sh -c "stty rows 150 && stty cols 350 && bash"
+	JUPYTER_HOST_PORT=$(JUPYTER_HOST_PORT) 									\
+	POSTGRES_PASSWORD=$(POSTGRES_PASSWORD) 									\
+	POSTGRES_PORT=$(POSTGRES_PORT) 											\
+	POSTGRES_DB=$(POSTGRES_DB) 												\
+	POSTGRES_USER=$(POSTGRES_USER) 											\
+	docker-compose -f docker-compose/services.yml 							\
+	exec postgres /bin/bash -c "psql -h localhost -U${POSTGRES_USER} ${POSTGRES_DB}"
+
